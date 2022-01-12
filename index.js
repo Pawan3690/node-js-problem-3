@@ -1,25 +1,23 @@
+
 const http = require('http');
-const fs = require("fs");
-const url = require('url');
+const url = require ("url");
 
+http.createServer(function (req, res) {
+  const queryObject = url.parse(req.url,true).query;
+    console.log(queryObject);
+    if (queryObject.metric === "area")
+    {
+        let area = 3.14 * queryObject.radius * queryObject.radius;
+        res.write("Area of Circle "+area);
+        console.log("Area of Circle "+area);
+    }
+    else if (queryObject.metric === "volume")
+    {
+        let volume = 4/3 * 3.14 * queryObject.radius * queryObject.radius * queryObject.radius;
+        volume = volume.toFixed(2);
+        res.write("volume of spere "+volume);
+        console.log("volume of spere "+volume);
+    }
+    res.end();
 
-
-// var q = url.parse(adr, true).query;
-
-
-
- http.createServer( (req, res) => {
-    if (req.url == "/metrics?object=sphere&metric=volume&radius=5") {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(" Volume of sphere is 523.60 ");
-
-      }  else (req.url == "/metrics?object=circle&metric=area&radius=5") ;{
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.write(" Area of circle is 78.50 " );
-            res.end();
-           
-    };
-
-    res.end()
-    
-  }).listen(8080)
+}).listen(8080);
